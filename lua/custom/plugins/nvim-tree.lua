@@ -37,6 +37,6 @@ return {
       },
     }
 
-    vim.keymap.set('n', '<C-b>', '<cmd>NvimTreeToggle<CR>')
+    vim.keymap.set('n', '<leader>f', '<cmd>NvimTreeToggle<CR>', { desc = '[F]ile explorer show/hide' })
   end,
 }
