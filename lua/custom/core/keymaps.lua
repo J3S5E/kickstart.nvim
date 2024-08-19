@@ -14,7 +14,9 @@ keymap.set('n', 'x', '"_x')
 keymap.set('n', '<leader>+', '<C-a>', { desc = 'Increment number' }) -- increment
 keymap.set('n', '<leader>-', '<C-x>', { desc = 'Decrement number' }) -- decrement
 
--- move lines in visual mode
+-- move lines
+keymap.set('n', '<C-j>', ':m +1<CR>')
+keymap.set('n', '<C-k>', ':m -2<CR>')
 keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
 keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
 
