@@ -10,10 +10,6 @@ local keymap = vim.keymap -- for conciseness
 -- delete single character without copying into register
 keymap.set('n', 'x', '"_x')
 
--- increment/decrement numbers
-keymap.set('n', '<leader>+', '<C-a>', { desc = 'Increment number' }) -- increment
-keymap.set('n', '<leader>-', '<C-x>', { desc = 'Decrement number' }) -- decrement
-
 -- move lines
 keymap.set('n', '<C-j>', ':m +1<CR>')
 keymap.set('n', '<C-k>', ':m -2<CR>')
@@ -33,10 +29,10 @@ keymap.set('x', '<leader>p', '"_dP')
 keymap.set({ 'n', 'v' }, '<leader>y', [["+y]], { desc = 'Yank to sys clipboard' })
 keymap.set('n', '<leader>Y', [["+Y]], { desc = 'Yank to sys clipboard' })
 
-keymap.set({ 'n', 'v' }, '<leader>d', [["_d]])
+keymap.set({ 'n', 'v' }, '<leader>d', [["_d]], { desc = '[D]elete (without copying to register)' })
 
 -- replace current word
-keymap.set('n', '<leader>rw', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'File: [R]ename [w]ord' })
+keymap.set('n', '<leader>rw', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'File: [R]ename [W]ord' })
 
 -- apparently not the same
 keymap.set('i', '<C-c>', '<Esc>')
