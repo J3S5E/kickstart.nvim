@@ -286,7 +286,7 @@ require('lazy').setup({
       -- Document existing key chains
       require('which-key').add {
         { '<leader>c', group = '[C]ode' },
-        { '<leader>d', group = '[D]ocument' },
+        { '<leader>b', group = '[B]uffer' },
         { '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },
         { '<leader>w', group = '[W]orkspace' },
@@ -505,7 +505,7 @@ require('lazy').setup({
 
           -- Fuzzy find all the symbols in your current document.
           --  Symbols are things like variables, functions, types, etc.
-          map('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
+          map('<leader>bs', require('telescope.builtin').lsp_document_symbols, '[B]uffer [S]ymbols')
 
           -- Fuzzy find all the symbols in your current workspace.
           --  Similar to document symbols, except searches over your entire project.
@@ -647,12 +647,12 @@ require('lazy').setup({
     cmd = { 'ConformInfo' },
     keys = {
       {
-        '<leader>f',
+        '<leader>bf',
         function()
           require('conform').format { async = true, lsp_fallback = true }
         end,
         mode = '',
-        desc = '[F]ormat buffer',
+        desc = '[B]uffer [F]ormat',
       },
     },
     opts = {
