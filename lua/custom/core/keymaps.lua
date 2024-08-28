@@ -1,5 +1,6 @@
 -- set leader key to space
 vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 
 local keymap = vim.keymap -- for conciseness
 
@@ -39,6 +40,12 @@ keymap.set('i', '<C-c>', '<Esc>')
 
 -- stop acidental presses
 keymap.set('n', 'Q', '<nop>')
+
+-- buffer nav
+keymap.set('n', '<leader>bp', ':bp<cr>', { desc = '[B]uffer: [P]revious' })
+keymap.set('n', '<leader>bn', ':bn<cr>', { desc = '[B]uffer: [N]ext' })
+keymap.set('n', '<leader>bd', ':bd<cr>', { desc = '[B]uffer: [D]elete' })
+keymap.set('n', '<leader>bl', ':ls<cr>', { desc = '[B]uffer: [L]ist' })
 
 ------------------
 -- Plugin Keymaps
