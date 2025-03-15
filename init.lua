@@ -493,6 +493,7 @@ require('lazy').setup({
 
       -- Allows extra capabilities provided by nvim-cmp
       'hrsh7th/cmp-nvim-lsp',
+      'ray-x/lsp_signature.nvim',
     },
     config = function()
       -- Brief aside: **What is LSP?**
@@ -744,6 +745,9 @@ require('lazy').setup({
             require('lspconfig')[server_name].setup(server)
           end,
         },
+      }
+      require('lsp_signature').setup {
+        hint_enable = false,
       }
     end,
   },
