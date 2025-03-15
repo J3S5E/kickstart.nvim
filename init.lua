@@ -748,7 +748,12 @@ require('lazy').setup({
       }
       require('lsp_signature').setup {
         hint_enable = false,
+        move_signature_window_key = { '<C-j>', '<C-k>' },
+        doc_lines = 0,
       }
+      vim.keymap.set({ 'n' }, '<Leader>ts', function()
+        vim.lsp.buf.signature_help()
+      end, { silent = true, noremap = true, desc = '[T]oggle [S]ignature' })
     end,
   },
 
