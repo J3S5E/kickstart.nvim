@@ -593,6 +593,15 @@ require('lazy').setup({
         -- But for many setups, the LSP (`tsserver`) will work just fine
         -- tsserver = {},
         --
+        -- harper_ls = {
+        --   settings = {
+        --     ['harper-ls'] = {
+        --       linters = {
+        --         sentence_capitalization = false,
+        --       },
+        --     },
+        --   },
+        -- },
 
         lua_ls = {
           -- cmd = {...},
