@@ -686,6 +686,15 @@ require('lazy').setup({
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         -- ts_ls = {},
         --
+        -- harper_ls = {
+        --   settings = {
+        --     ['harper-ls'] = {
+        --       linters = {
+        --         sentence_capitalization = false,
+        --       },
+        --     },
+        --   },
+        -- },
 
         lua_ls = {
           -- cmd = { ... },
