@@ -15,22 +15,25 @@ return {
       },
       git = {
         ignore = false,
+        enable = true,
+        timeout = 1000,
       },
       filters = {
         dotfiles = false,
         custom = { '^.git$' },
       },
       renderer = {
+        group_empty = true,
         icons = {
           glyphs = {
             git = {
-              staged = '✓',
-              deleted = '',
-              renamed = 'R',
-              unstaged = 'M',
-              unmerged = 'UM',
-              untracked = 'U',
-              ignored = '_',
+              staged = '󰄲',
+              deleted = '',
+              renamed = '',
+              unstaged = '󰓎',
+              unmerged = '',
+              untracked = '',
+              ignored = '',
             },
           },
         },
