@@ -51,3 +51,4 @@ keymap.set('n', '<leader>bl', ':ls<cr>', { desc = '[B]uffer: [L]ist' })
 -- Plugin Keymaps
 ------------------
 keymap.set('n', '<leader>u', vim.cmd.UndotreeToggle, { desc = '[U]ndo tree' }) -- open local file history
+keymap.set('n', '<leader>tc', '<cmd>ColorizerToggle<cr>', { desc = 'Toggle [C]olours' })
