@@ -9,15 +9,95 @@ return {
     'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
     'MunifTanjim/nui.nvim',
   },
+  lazy = false,
   cmd = 'Neotree',
   keys = {
     { '\\', ':Neotree reveal<CR>', desc = 'NeoTree reveal', silent = true },
   },
   opts = {
+    default_component_configs = {
+      git_status = {
+        symbols = {
+          -- Change type
+          added = '', -- or "✚", but this is redundant info if you use git_status_colors on the name
+          modified = '', -- or "", but this is redundant info if you use git_status_colors on the name
+          deleted = '', -- this can only be used in the git_status source
+          renamed = '󰁕', -- this can only be used in the git_status source
+          -- Status type
+          untracked = '',
+          ignored = '',
+          unstaged = '󰓎',
+          staged = '󰄲',
+          conflict = '',
+        },
+      },
+      icon = {
+        folder_empty = '',
+      },
+      indent = {
+        indent_size = 1,
+      },
+    },
     filesystem = {
+      components = {
+        harpoon_index = function(config, node, _)
+          local Marked = require 'harpoon.mark'
+          local path = node:get_id()
+          local success, index = pcall(Marked.get_index_of, path)
+          if success and index and index > 0 then
+            return {
+              text = string.format('󱡅 %d', index),
+              highlight = config.highlight or 'NeoTreeDirectoryIcon',
+            }
+          else
+            return {}
+          end
+        end,
+      },
+      follow_current_file = {
+        enabled = true, -- This will find and focus the file in the active buffer every time the current file is changed while the tree is open.
+        leave_dirs_open = false, -- `false` closes auto expanded dirs, such as with `:Neotree reveal`
+      },
+      group_empty_dirs = true,
+      renderers = {
+        file = {
+          { 'indent' },
+          { 'icon' },
+          {
+            'container',
+            content = {
+              {
+                'name',
+                zindex = 10,
+              },
+              {
+                'symlink_target',
+                zindex = 10,
+                highlight = 'NeoTreeSymbolicLinkTarget',
+              },
+              { 'clipboard', zindex = 10 },
+              { 'bufnr', zindex = 10 },
+              { 'harpoon_index', zindex = 20, align = 'right' },
+              { 'modified', zindex = 20, align = 'right' },
+              { 'diagnostics', zindex = 20, align = 'right' },
+              { 'git_status', zindex = 10, align = 'right' },
+              { 'file_size', zindex = 10, align = 'right' },
+              { 'type', zindex = 10, align = 'right' },
+              { 'last_modified', zindex = 10, align = 'right' },
+              { 'created', zindex = 10, align = 'right' },
+            },
+          },
+        },
+      },
       window = {
         mappings = {
           ['\\'] = 'close_window',
+          ['b'] = function()
+            vim.api.nvim_exec('Neotree focus buffers left', true)
+          end,
+          ['g'] = function()
+            vim.api.nvim_exec('Neotree focus git_status left', true)
+          end,
         },
       },
     },
