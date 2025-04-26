@@ -38,6 +38,14 @@ return {
         indent_size = 1,
       },
     },
+    commands = {
+      show_only_buffers = function()
+        vim.api.nvim_input ':Neotree focus buffers left<cr>'
+      end,
+      show_only_git = function()
+        vim.api.nvim_input ':Neotree focus git_status left<cr>'
+      end,
+    },
     filesystem = {
       components = {
         harpoon_index = function(config, node, _)
@@ -92,12 +100,8 @@ return {
       window = {
         mappings = {
           ['\\'] = 'close_window',
-          ['b'] = function()
-            vim.api.nvim_exec('Neotree focus buffers left', true)
-          end,
-          ['g'] = function()
-            vim.api.nvim_exec('Neotree focus git_status left', true)
-          end,
+          ['b'] = 'show_only_buffers',
+          ['g'] = 'show_only_git',
         },
       },
     },
