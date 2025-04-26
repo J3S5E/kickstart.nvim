@@ -477,6 +477,8 @@ require('lazy').setup({
       -- Allows extra capabilities provided by nvim-cmp
       'hrsh7th/cmp-nvim-lsp',
       'ray-x/lsp_signature.nvim',
+
+      'J3S5E/breadcrumb.nvim',
     },
     config = function()
       -- Brief aside: **What is LSP?**
@@ -598,6 +600,11 @@ require('lazy').setup({
                 vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
               end,
             })
+          end
+
+          local breadcrumb = require 'breadcrumb'
+          if client and client.server_capabilities.documentSymbolProvider then
+            breadcrumb.attach(client, event.buf)
           end
 
           -- The following code creates a keymap to toggle inlay hints in your
