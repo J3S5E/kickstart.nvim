@@ -34,6 +34,10 @@ return {
       icon = {
         folder_empty = '',
       },
+      modified = {
+        symbol = '',
+        highlight = 'NeoTreeModified',
+      },
       indent = {
         indent_size = 1,
       },
