@@ -38,7 +38,7 @@ keymap.set('n', '<leader>rw', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Lef
 -- apparently not the same
 keymap.set('i', '<C-c>', '<Esc>')
 
--- stop acidental presses
+-- stop accidental presses
 keymap.set('n', 'Q', '<nop>')
 
 -- buffer nav
