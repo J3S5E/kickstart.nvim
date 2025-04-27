@@ -13,6 +13,63 @@ return {
 
     harpoon:extend(extensions.builtins.highlight_current_file())
 
+    function dump(a)
+      if type(a) == 'table' then
+        local b = '{ '
+        for c, d in pairs(a) do
+          if type(c) ~= 'number' then
+            c = '"' .. c .. '"'
+          end
+          b = b .. '[' .. c .. '] = ' .. dump(d) .. ','
+        end
+        return b .. '} '
+      else
+        return tostring(a)
+      end
+    end
+
+    local function updateKeys(list_items)
+      local items = list_items
+      for idx = 1, 9, 1 do
+        -- ask for input to pause
+        if items[idx] == nil then
+          -- TO-DO have a check if keymap exists then delete
+          keymap.set('n', '<leader>hg' .. idx, function()
+            print('no harpoon mark set for ' .. idx)
+          end, { desc = '' })
+          keymap.del('n', '<leader>hg' .. idx)
+        else
+          keymap.set('n', '<leader>hg' .. idx, function()
+            harpoon:list():select(idx)
+          end, { desc = items[idx].value })
+        end
+      end
+    end
+
+    local function updateMarks(cx)
+      require('neo-tree.sources.manager').refresh()
+      if cx == nil then
+        vim.input 'no harpoon marks set'
+        return
+      end
+      local list = cx.list
+      local items = cx.items
+      if list ~= nil then
+        items = list.items
+      end
+      if items ~= nil then
+        updateKeys(items)
+      end
+    end
+
+    harpoon:extend {
+      ADD = updateMarks,
+      LIST_CREATED = updateMarks,
+      REMOVE = updateMarks,
+      REORDER = updateMarks,
+      NAVIGATE = updateMarks,
+    }
+
     local conf = require('telescope.config').values
     local function toggle_telescope(harpoon_files)
       local file_paths = {}
@@ -34,7 +91,6 @@ return {
         end
         return next
       end
-      local entry_display = require 'telescope.pickers.entry_display'
 
       require('telescope.pickers')
         .new({}, {
@@ -62,25 +118,17 @@ return {
     keymap.set('n', '<leader>hl', function()
       toggle_telescope(harpoon:list())
     end, { desc = '[h]arpoon marks [l]ist' })
-    keymap.set('n', '<leader>hy', function()
+    keymap.set('n', '<leader>hm', function()
       harpoon.ui:toggle_quick_menu(harpoon:list())
     end, { desc = '[h]arpoon marks [m]anage' })
     keymap.set('n', '<leader>hh', function()
       harpoon:list():add()
-    end, { desc = 'Mark file with [h]arpoon' })
+    end, { desc = '[h]arpoon mark - mark with [h]arpoon' })
     keymap.set('n', '<leader>hd', function()
       local open_file = vim.fn.expand '%:t'
       local list = harpoon:list()
-      local _, index = list:get_by_value(open_file)
-      if index > 0 then
-        while index < list:length() do
-          local next = list:get(index + 1)
-          ---@diagnostic disable-next-line: param-type-mismatch
-          list:replace_at(index, next)
-          index = index + 1
-        end
-        list:remove_at(index)
-      end
+      local item = list:get_by_value(open_file)
+      harpoon:list().remove(list, item)
     end, { desc = '[h]arpoon mark - [d]elete' })
     keymap.set('n', '<leader>hp', function()
       harpoon:list():next()
