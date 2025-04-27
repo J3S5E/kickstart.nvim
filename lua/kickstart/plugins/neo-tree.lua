@@ -8,6 +8,7 @@ return {
     'nvim-lua/plenary.nvim',
     'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
     'MunifTanjim/nui.nvim',
+    'ThePrimeagen/harpoon',
   },
   lazy = false,
   cmd = 'Neotree',
@@ -53,9 +54,12 @@ return {
     filesystem = {
       components = {
         harpoon_index = function(config, node, _)
-          local Marked = require 'harpoon.mark'
+          local harpoon = require 'harpoon'
           local path = node:get_id()
-          local success, index = pcall(Marked.get_index_of, path)
+          local cwd = vim.fn.getcwd()
+          local list = harpoon:list()
+          local file_name = path:gsub(cwd, ''):sub(2)
+          local success, index = list:get_by_value(file_name)
           if success and index and index > 0 then
             return {
               text = string.format('󱡅 %d', index),

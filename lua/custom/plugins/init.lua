@@ -5,4 +5,5 @@
 return {
   'mbbill/undotree',
   'tpope/vim-fugitive',
+  'sitiom/nvim-numbertoggle',
 }
