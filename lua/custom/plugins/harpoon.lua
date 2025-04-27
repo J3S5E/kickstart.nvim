@@ -13,25 +13,9 @@ return {
 
     harpoon:extend(extensions.builtins.highlight_current_file())
 
-    function dump(a)
-      if type(a) == 'table' then
-        local b = '{ '
-        for c, d in pairs(a) do
-          if type(c) ~= 'number' then
-            c = '"' .. c .. '"'
-          end
-          b = b .. '[' .. c .. '] = ' .. dump(d) .. ','
-        end
-        return b .. '} '
-      else
-        return tostring(a)
-      end
-    end
-
     local function updateKeys(list_items)
       local items = list_items
       for idx = 1, 9, 1 do
-        -- ask for input to pause
         if items[idx] == nil then
           -- TO-DO have a check if keymap exists then delete
           keymap.set('n', '<leader>hg' .. idx, function()
