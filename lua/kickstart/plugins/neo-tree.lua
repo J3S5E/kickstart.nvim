@@ -33,7 +33,7 @@ return {
         },
       },
       icon = {
-        folder_empty = '',
+        folder_empty = '',
       },
       modified = {
         symbol = '',
