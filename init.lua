@@ -275,6 +275,16 @@ require('lazy').setup({
   { -- Useful plugin to show you pending keybinds.
     'folke/which-key.nvim',
     event = 'VimEnter', -- Sets the loading event to 'VimEnter'
+    init = function()
+      local wk = require 'which-key'
+      wk.add {
+        '<leader>bg',
+        group = '[B]uffer: [G]oto',
+        expand = function()
+          return require('which-key.extras').expand.buf()
+        end,
+      }
+    end,
     opts = {
       -- delay between pressing a key and opening which-key (milliseconds)
       -- this setting is independent of vim.opt.timeoutlen
