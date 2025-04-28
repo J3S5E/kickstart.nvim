@@ -52,6 +52,7 @@ return {
       REMOVE = updateMarks,
       REORDER = updateMarks,
       NAVIGATE = updateMarks,
+      SELECT = updateMarks,
     }
 
     local conf = require('telescope.config').values
