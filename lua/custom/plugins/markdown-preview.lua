@@ -1,5 +1,6 @@
 return {
   'iamcco/markdown-preview.nvim',
+  event = { 'BufReadPre', 'BufNewFile' },
   cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
   build = 'cd app && npm install',
   init = function()

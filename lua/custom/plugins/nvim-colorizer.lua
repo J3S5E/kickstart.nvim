@@ -1,6 +1,6 @@
 return {
   'catgoose/nvim-colorizer.lua',
-  event = 'VeryLazy',
+  event = { 'BufReadPre', 'BufNewFile' },
   opts = {
     lazy_load = true,
     -- other setup options

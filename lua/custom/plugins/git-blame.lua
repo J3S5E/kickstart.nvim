@@ -1,6 +1,6 @@
 return {
   'f-person/git-blame.nvim',
-  event = 'VeryLazy',
+  event = { 'BufReadPre', 'BufNewFile' },
   opts = {
     enabled = true, -- if you want to enable the plugin
     message_template = '<author>; <date> • <summary>', -- template for the blame message, check the Message template section for more options
