@@ -98,6 +98,61 @@ return {
       },
     }
 
+    local is_windows = vim.fn.has 'win64' == 1 or vim.fn.has 'win32' == 1 or vim.fn.has 'win16' == 1
+    local folder_delim = is_windows and '\\' or '/'
+    local local_dir = os.getenv 'XDG_CONFIG_HOME' and os.getenv 'XDG_CONFIG_HOME' or os.getenv 'localappdata'
+    local netcoredbg_dir_table = { local_dir, 'nvim-data', 'mason', 'packages', 'netcoredbg', 'netcoredbg' }
+    local netcoredbg_dir = table.concat(netcoredbg_dir_table, folder_delim)
+    local winpath_path = netcoredbg_dir .. folder_delim .. 'netcoredbg.exe'
+
+    dap.adapters.coreclr = {
+      type = 'executable',
+      command = is_windows and winpath_path or netcoredbg_dir,
+      args = { '--interpreter=vscode' },
+    }
+
+    dap.adapters.netcoredbg = {
+      type = 'executable',
+      command = is_windows and winpath_path or netcoredbg_dir,
+      args = { '--interpreter=vscode' },
+    }
+
+    local bin_dir_table = { '', 'bin', 'debug', 'net8.0', '' }
+    local bin_dir = table.concat(bin_dir_table, folder_delim)
+
+    dap.configurations.cs = {
+      {
+        type = 'coreclr',
+        name = 'launch - netcoredbg',
+        request = 'launch',
+        program = function()
+          -- return vim.fn.input("Path to dll: ", vim.fn.getcwd() .. "/src/", "file")
+          return vim.fn.input('Path to dll: ', vim.fn.getcwd() .. bin_dir, 'file')
+        end,
+
+        -- justMyCode = false,
+        -- stopAtEntry = false,
+        -- -- program = function()
+        -- --   -- todo: request input from ui
+        -- --   return "/path/to/your.dll"
+        -- -- end,
+        -- env = {
+        --   ASPNETCORE_ENVIRONMENT = function()
+        --     -- todo: request input from ui
+        --     return "Development"
+        --   end,
+        --   ASPNETCORE_URLS = function()
+        --     -- todo: request input from ui
+        --     return "http://localhost:5050"
+        --   end,
+        -- },
+        -- cwd = function()
+        --   -- todo: request input from ui
+        --   return vim.fn.getcwd()
+        -- end,
+      },
+    }
+
     -- Dap UI setup
     -- For more information, see |:help nvim-dap-ui|
     dapui.setup {
@@ -121,16 +176,16 @@ return {
     }
 
     -- Change breakpoint icons
-    -- vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
-    -- vim.api.nvim_set_hl(0, 'DapStop', { fg = '#ffcc00' })
-    -- local breakpoint_icons = vim.g.have_nerd_font
-    --     and { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
-    --   or { Breakpoint = '●', BreakpointCondition = '⊜', BreakpointRejected = '⊘', LogPoint = '◆', Stopped = '⭔' }
-    -- for type, icon in pairs(breakpoint_icons) do
-    --   local tp = 'Dap' .. type
-    --   local hl = (type == 'Stopped') and 'DapStop' or 'DapBreak'
-    --   vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
-    -- end
+    vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
+    vim.api.nvim_set_hl(0, 'DapStop', { fg = '#ffcc00' })
+    local breakpoint_icons = vim.g.have_nerd_font
+        and { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
+      or { Breakpoint = '●', BreakpointCondition = '⊜', BreakpointRejected = '⊘', LogPoint = '◆', Stopped = '⭔' }
+    for type, icon in pairs(breakpoint_icons) do
+      local tp = 'Dap' .. type
+      local hl = (type == 'Stopped') and 'DapStop' or 'DapBreak'
+      vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
+    end
 
     dap.listeners.after.event_initialized['dapui_config'] = dapui.open
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close

@@ -664,6 +664,15 @@ require('lazy').setup({
       --  So, we create new capabilities with nvim cmp, and then broadcast that to the servers.
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+      local language_servers = vim.lsp.get_clients() -- or list servers manually like {'gopls', 'clangd'}
+      for _, ls in ipairs(language_servers) do
+        require('lspconfig')[ls].setup {
+          capabilities = capabilities,
+          -- you can add other fields for setting up lsp server in this table
+        }
+      end
+
+      local pid = vim.fn.getpid()
 
       -- Enable the following language servers
       --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
@@ -713,6 +722,13 @@ require('lazy').setup({
             },
           },
         },
+
+        omnisharp = {
+          cmd = { 'omnisharp', '--languageserver', '--hostPID', tostring(pid) },
+          -- filetypes = { ... },
+          -- capabilities = {},
+          -- settings = {},
+        },
       }
 
       -- Ensure the servers and tools above are installed
@@ -731,6 +747,17 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'lua-language-server',
+        'csharp-language-server',
+        'omnisharp',
+        'xmlformatter',
+        'stylua',
+        'bicep-lsp',
+        'html-lsp',
+        'css-lsp',
+        'csharpier',
+        'prettier',
+        'json-lsp',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
