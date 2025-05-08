@@ -17,7 +17,7 @@ return {
       auto_trigger = true,
       hide_during_completion = true,
       keymap = {
-        accept = '<Tab>',
+        accept = '<F4>',
       },
     },
     panel = { enabled = false },
