@@ -19,6 +19,10 @@ return {
     lualine.setup {
       options = {
         theme = 'codedark',
+        disabled_filetypes = {
+          statusline = { 'neo-tree' },
+          tabline = { 'neo-tree' },
+        },
       },
       sections = {
         lualine_c = { breadcrumb },
