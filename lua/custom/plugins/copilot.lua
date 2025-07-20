@@ -5,10 +5,10 @@ return {
   event = 'InsertEnter',
   keys = {
     {
-      '<leader>ac',
+      '<leader>a',
       mode = { 'n', 'x' },
       '<cmd>Copilot! attach<CR>',
-      desc = '[a]ssist with [c]opilot',
+      desc = '[a]ssist',
     },
   },
   opts = {
@@ -22,8 +22,7 @@ return {
     },
     panel = { enabled = false },
     filetypes = {
-      markdown = true,
-      ['*'] = false,
+      ['*'] = true,
     },
   },
 }
