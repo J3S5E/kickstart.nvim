@@ -50,6 +50,22 @@ return {
       show_only_git = function()
         vim.api.nvim_input ':Neotree focus git_status left<cr>'
       end,
+      search_grep_in_directory = function(state)
+        local node = state.tree:get_node()
+        if not node then
+          return
+        end
+        local path = node:get_id()
+        vim.api.nvim_input(':Telescope live_grep cwd=' .. path .. '<cr>')
+      end,
+      search_files_in_directory = function(state)
+        local node = state.tree:get_node()
+        if not node then
+          return
+        end
+        local path = node:get_id()
+        vim.api.nvim_input(':Telescope find_files cwd=' .. path .. '<cr>')
+      end,
     },
     filesystem = {
       components = {
@@ -110,6 +126,8 @@ return {
           ['\\'] = 'close_window',
           ['b'] = 'show_only_buffers',
           ['g'] = 'show_only_git',
+          ['G'] = 'search_grep_in_directory',
+          ['F'] = 'search_files_in_directory',
         },
       },
     },
