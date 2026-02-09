@@ -73,6 +73,16 @@ return {
         end
       end,
     },
+    window = {
+      mappings = {
+        ['\\'] = 'close_window',
+        ['b'] = 'show_only_buffers',
+        ['g'] = 'show_only_git',
+        ['G'] = 'search_grep_in_directory',
+        ['F'] = 'search_files_in_directory',
+        ['I'] = 'image_wezterm',
+      },
+    },
     filesystem = {
       components = {
         harpoon_index = function(config, node, _)
@@ -125,16 +135,6 @@ return {
               { 'created', zindex = 10, align = 'right' },
             },
           },
-        },
-      },
-      window = {
-        mappings = {
-          ['\\'] = 'close_window',
-          ['b'] = 'show_only_buffers',
-          ['g'] = 'show_only_git',
-          ['G'] = 'search_grep_in_directory',
-          ['F'] = 'search_files_in_directory',
-          ['I'] = 'image_wezterm',
         },
       },
     },
