@@ -34,6 +34,7 @@ keymap.set({ 'n', 'v' }, '<leader>d', [["_d]], { desc = '[D]elete (without copyi
 
 -- replace current word
 keymap.set('n', '<leader>rw', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], { desc = 'File: [R]ename [W]ord' })
+keymap.set('v', '<leader>rw', [["hy:%s/<C-r>h/<C-r>h/gI<Left><Left><Left>]], { desc = 'File: [R]ename [W]ord(s)' })
 
 -- apparently not the same
 keymap.set('i', '<C-c>', '<Esc>')
