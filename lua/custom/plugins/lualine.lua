@@ -15,14 +15,14 @@ return {
       return breadcrumb.get_breadcrumb()
     end
 
+    vim.opt.laststatus = 3
+
     -- configure lualine with theme
     lualine.setup {
       options = {
         theme = 'codedark',
-        disabled_filetypes = {
-          statusline = { 'neo-tree' },
-          tabline = { 'neo-tree' },
-        },
+        globalstatus = true,
+        ignore_focus = { 'neo-tree', 'neo-tree filesystem' },
       },
       sections = {
         lualine_c = { breadcrumb },
